@@ -70,7 +70,7 @@ define(function(require,exports,module){
 	sayName();
 })
 
-//ES6  需要通过一些编译中间件编译后，才能兼容浏览器
+//ES6  需要通过一些编译中间件编译后，才能兼容浏览器（使用webpack借助babel编辑）
 //原理：export 暴露接口，import引入，相对前面几个要复杂些，但更好用。 
 
 //test.js
