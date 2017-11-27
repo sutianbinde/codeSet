@@ -84,7 +84,7 @@ export default d;
 import {a as m, b, c} from "./components/test"; //引入变量， 使用as重命名
 import * as m from "./components/test"; //引入整个模块对象，通过m可以访问所有的值，特殊值 m.default
 import m from "./components/test";  //引入使用default 暴露的值 
-import {a,b} from "./components/test";
+import m, {a,b} from "./components/test"; //引入default和 其他模块
 console.log(a,b,m)
 
 
