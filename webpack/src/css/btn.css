@@ -1,0 +1,5 @@
+.btn {
+	height: 34px;
+	transition: all 0.5 ease;
+	display: flex;
+}

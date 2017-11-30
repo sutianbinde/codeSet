@@ -1,0 +1,17 @@
+@import url("./btn.css");
+
+html, body {
+	padding: 0;
+	margin: 0;
+	background-color: skyblue;
+}
+
+ul, li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.flex-box {
+	display: flex;
+}
