@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .box{
+            min-height: 200px;
+            background: #b5fffa;
+        }
+		.wrap{
+			position:fixed;
+			left:0;
+			top:0;
+			right:0;
+			bottom:0;
+			background:rgba(0,0,0,0.3);
+		}
+    </style>
+</head>
+<body>
+	<div class="wrap">
+		<label>用户名：</label><input id="input01" type="text"/><button id="btn01">提交</button>
+	</div>
+
+	<div class="box"></div>
+
+	<label>输入内容：</label>
+	<input id="input02" type="text"/>
+	<button id="btn02">提交</button>
+
+	<script src="socket.io.js"></script>
+	<script>
+		var wrap = document.querySelector(".wrap");
+		var btn01 = document.querySelector("#btn01");
+		var btn02 = document.querySelector("#btn02");
+		var input01 = document.querySelector("#input01");
+		var input02 = document.querySelector("#input02");
+		var box = document.querySelector(".box");
+		console.log(btn01,input01,box);
+
+		var socket=io.connect();//与服务器进行连接
+		
+		socket.on("connect", function(){ //当websoket链接成功
+			input01.focus();
+		});
+		
+		socket.on("loginSucess",function(){
+			console.log("登录成功");
+			wrap.style.display = "none";
+		});
+		
+		socket.on("nameExisted",function(){
+			console.log("用户名已经存在");
+		});
+		
+		socket.on("system",function(nickName, userCount, type){
+			if( type == "login"){
+				box.innerHTML += "<p>"+ nickName +"加入了聊天<em>;"+ userCount +"人在线</em></p>"
+			}
+			
+		});
+		
+		socket.on("newMsg",function(user, msg){
+			box.innerHTML += "<p><a href='#'>"+ user +"：</a>"+ msg +"</p>"
+		});
+		
+		btn01.onclick=function(){ //输入用户名
+			if(input01.value.trim().length != 0){
+				socket.emit('login', input01.value); //不为空，则发起登录请求。
+			}else{
+				input01.focus();
+			}
+			
+		}
+		
+		
+		btn02.onclick=function(){
+			box.innerHTML += "<p style='text-align:right'>"+input02.value+"<a href='#'>："+input01.value+"</a></p>"
+			socket.emit('postMsg', input02.value);//发送一个名为foo的事件，并且传递一个字符串数据
+		}
+
+	</script>
+</body>
+</html>
